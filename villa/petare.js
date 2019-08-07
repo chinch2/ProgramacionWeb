@@ -1,51 +1,90 @@
-var vp = document.getElementById("villapetare");
-var papel = vp.getContext("2d");
-
-var fondo = {
+var d = document.getElementById("drawing");
+var canv = d.getContext("2d");
+var background = {
   url: "tile.png",
-  cargaOK: false
-}
-var vaca = {
+  loadOK: false
+};
+var cow = {
   url: "vaca.png",
-  cargaOK: false
+  loadOK: false
+};
+var chicken = {
+  url: "pollo.png",
+  loadOK: false
+};
+var pig = {
+  url: "cerdo.png",
+  loadOK: false
 };
 
-var cantidad = aleatorio(1, 10);
-
-fondo.imagen = new Image();
-fondo.imagen.src = fondo.url;
-fondo.imagen.addEventListener("load", cargarFondo);
-
-vaca.imagen = new Image();
-vaca.imagen.src = vaca.url;
-vaca.imagen.addEventListener("load", cargarVacas);
-
-function cargarFondo() {
-  fondo.cargaOK = true;
-  dibujar();
-}
-function cargarVacas() {
-  vaca.cargaOK = true;
-  dibujar();
+function randomNumber(min, max) {
+  var result;
+  result = Math.floor(Math.random() * (max - min + 1)) + min;
+  return result;
 }
 
-function dibujar() {
-  if (fondo.cargaOK) {
-    papel.drawImage(fondo.imagen, 0, 0);
+function mapLoad() {
+  background.loadOK = true;
+  draw();
+
+}
+
+function cowLoad() {
+  cow.loadOK = true;
+  draw();
+
+}
+
+function chickenLoad() {
+  chicken.loadOK = true;
+  draw();
+
+}
+
+function pigLoad() {
+  pig.loadOK = true;
+  draw();
+
+}
+
+function draw() {
+  var x, y;
+  if (background.loadOK) {
+    canv.drawImage(background.file, 0, 0);
   }
-  if (vaca.cargaOK) {
-    console.log(cantidad);
-    for (var v = 0; v < cantidad; v++) {
-      var x = aleatorio(0, 7);
-      var y = aleatorio(0, 10);
-      var x = x * 60;
-      var y = y * 40;
-      papel.drawImage(vaca.imagen, x, y);
+  if (cow.loadOK) {
+    for (var v = 0; v < randomNumber(0, 30); v++) {
+      x = randomNumber(0, 420);
+      y = randomNumber(0, 420);
+      canv.drawImage(cow.file, x, y);
+    }
+  }
+  if (chicken.loadOK) {
+    for (var p = 0; p < randomNumber(0, 30); p++) {
+      x = randomNumber(0, 420);
+      y = randomNumber(0, 420);
+      canv.drawImage(chicken.file, x, y);
+    }
+  }
+  if (pig.loadOK) {
+    for (var c = 0; c < randomNumber(0, 30); c++) {
+      x = randomNumber(0, 420);
+      y = randomNumber(0, 420);
+      canv.drawImage(pig.file, x, y);
     }
   }
 }
-function aleatorio(min, maxi) {
-  var resultado;
-  resultado = Math.floor(Math.random() * (maxi - min + 1)) + min;
-  return resultado;
-}
+
+background.file = new Image();
+background.file.src = background.url;
+background.file.addEventListener("load", mapLoad);
+cow.file = new Image();
+cow.file.src = cow.url;
+cow.file.addEventListener("load", cowLoad);
+chicken.file = new Image();
+chicken.file.src = chicken.url;
+chicken.file.addEventListener("load", chickenLoad);
+pig.file = new Image();
+pig.file.src = pig.url;
+pig.file.addEventListener("load", pigLoad);
+
